@@ -3,6 +3,7 @@ import requests
 
 app = Flask(__name__)
 
+@app.route('/result', methods=['POST'])
 def get_weather(city):
     url = 'https://api.openweathermap.org/data/2.5/weather?q={city}&appid=7c729a371ae49b524a406fc8113c01329'
     response = requests.get(url)
