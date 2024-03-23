@@ -3,14 +3,12 @@ import requests
 
 app = Flask(__name__)
 
-@app.route('/result', methods=['POST'])
+# @app.route('/result', methods=['GET','POST'])
 def get_weather(city):
-    url = 'https://api.openweathermap.org/data/2.5/weather?q={city}&appid=7c729a371ae49b524a406fc8113c01329'
+    url = 'https://api.openweathermap.org/data/2.5/weather?q={}&appid=7c729a371ae49b524a406fc8113c01329'.format(city)
     response = requests.get(url)
-    data = response.json()
-    #weather = data['weather'][0]['description']
-    temperature = data['main']['temp']
-    return weather, temperature
+    temperature = 'temp'
+    return temperature
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -18,7 +16,7 @@ def index():
         name = request.form['name']
         city = request.form['city']
         temperature = get_weather(city)
-        message = f'опа, {name}! Сейчас в городе {city} температура {temperature}°C.'
+        message = f'опа, {name}! Сейчас в городе {city}  температура {temperature}°C.'
         return render_template('index.html', message=message)
     return render_template('index.html', message=None)
 
