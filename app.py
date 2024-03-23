@@ -7,7 +7,8 @@ app = Flask(__name__)
 def get_weather(city):
     url = 'https://api.openweathermap.org/data/2.5/weather?q={}&appid=7c729a371ae49b524a406fc8113c01329'.format(city)
     response = requests.get(url)
-    temperature = 'temp'
+    data = response.json()
+    temperature = data
     return temperature
 
 @app.route('/', methods=['GET', 'POST'])
@@ -17,7 +18,7 @@ def index():
         city = request.form['city']
         temperature = get_weather(city)
         message = f'опа, {name}! Сейчас в городе {city}  температура {temperature}°C.'
-        return render_template('index.html', message=message)
+        return message
     return render_template('index.html', message=None)
 
 @app.errorhandler(404)
