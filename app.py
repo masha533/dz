@@ -8,7 +8,7 @@ def get_weather(city):
     url = 'https://api.openweathermap.org/data/2.5/weather?q={city}&appid=7c729a371ae49b524a406fc8113c01329'
     response = requests.get(url)
     data = response.json()
-    weather = data['weather'][0]['description']
+    #weather = data['weather'][0]['description']
     temperature = data['main']['temp']
     return weather, temperature
 
@@ -17,8 +17,8 @@ def index():
     if request.method == 'POST':
         name = request.form['name']
         city = request.form['city']
-        weather, temperature = get_weather(city)
-        message = f'опа, {name}! Сейчас в городе {city} {weather} а температура {temperature}°C.'
+        temperature = get_weather(city)
+        message = f'опа, {name}! Сейчас в городе {city} температура {temperature}°C.'
         return render_template('index.html', message=message)
     return render_template('index.html', message=None)
 
